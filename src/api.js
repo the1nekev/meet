@@ -48,7 +48,7 @@ const removeQuery = () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const response = await fetch(
-    "https://rcnaxp0pii.execute-api.us-east-1.amazonaws.com/dev/api/token/{code}" +
+    "https://rcnaxp0pii.execute-api.us-east-1.amazonaws.com/dev/api/token" +
       "/" +
       encodeCode
   );
