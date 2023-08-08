@@ -48,7 +48,9 @@ const removeQuery = () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const response = await fetch(
-    "YOUR_GET_ACCESS_TOKEN_ENDPOINT" + "/" + encodeCode
+    "https://rcnaxp0pii.execute-api.us-east-1.amazonaws.com/dev/api/token/{code}" +
+      "/" +
+      encodeCode
   );
   const { access_token } = await response.json();
   access_token && localStorage.setItem("access_token", access_token);
@@ -57,7 +59,7 @@ const getToken = async (code) => {
 };
 
 export const getEvents = async () => {
-  if (window.location.href.startsWith("https://localhost")) {
+  if (window.location.href.startsWith("http://localhost")) {
     return mockData;
   }
 
