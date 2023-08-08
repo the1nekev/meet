@@ -22,7 +22,7 @@ export const extractLocations = (events) => {
  * This function will fecth the list of all events
  */
 
-const checkToken = async (accessToken) => {
+export const checkToken = async (accessToken) => {
   const response = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
   );
@@ -66,7 +66,7 @@ export const getEvents = async () => {
   if (token) {
     removeQuery();
     const url =
-      "https://rcnaxp0pii.execute-api.us-east-1.amazonaws.com/dev/api/get-events/{access_token}" +
+      "https://rcnaxp0pii.execute-api.us-east-1.amazonaws.com/dev/api/get-events" +
       "/" +
       token;
     const response = await fetch(url);
