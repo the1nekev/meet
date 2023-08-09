@@ -16,7 +16,12 @@ describe("<App /> component", () => {
   test("render CitySearch", () => {
     expect(AppDOM.querySelector("#city-search")).toBeInTheDocument();
   });
-  describe("<App /> integration", () => {});
+  test("render NumberOfEvents", () => {
+    expect(AppDOM.querySelector("#number-of-events")).toBeInTheDocument();
+  });
+});
+
+describe("<App /> Integration", () => {
   test("renders a list of events matching the city selected by user", async () => {
     const user = userEvent.setup();
     const AppComponent = render(<App />);
@@ -39,5 +44,21 @@ describe("<App /> component", () => {
     allRenderedEventItems.forEach((event) => {
       expect(event.textContent).toContain("Berlin, Germany");
     });
+  });
+
+  test("selected number of events by the user are rendered", async () => {
+    const AppComponent = render(<App />);
+    const AppDOM = AppComponent.container.firstChild;
+
+    const NumberOfEventsDOM = AppDOM.querySelector("#number-of-events");
+    const NumberOfEventsInput =
+      within(NumberOfEventsDOM).queryByRole("textbox");
+
+    await userEvent.type(NumberOfEventsInput, "{backspace}{backspace}10");
+
+    const EventListDOM = AppDOM.querySelector("#event-list");
+    const allRenderedEventItems =
+      within(EventListDOM).queryAllByRole("listitem");
+    expect(allRenderedEventItems.length).toEqual(10);
   });
 });
