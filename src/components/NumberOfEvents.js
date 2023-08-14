@@ -15,6 +15,7 @@ const NumberOfEvents = ({ setCurrentNOE }) => {
       <label htmlFor="number-of-events-input">Number of Events: </label>
       <input
         type="text"
+        placeholder="Enter a number"
         id="number-of-events-input"
         className="number-of-events-input"
         defaultValue={32}
