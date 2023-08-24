@@ -1,7 +1,5 @@
 //src/api.js
 
-import mockData from "./mock-data";
-
 /**
  *
  * @param {*} events:
@@ -10,6 +8,9 @@ import mockData from "./mock-data";
  * It will also remove all duplicates by creating another new array using the spread operator and spreading a Set.
  * The Set will remove all duplicates from the array.
  */
+
+import mockData from "./mock-data";
+import NProgress from "nprogress";
 
 export const extractLocations = (events) => {
   const extractedLocations = events.map((event) => event.location);
@@ -60,7 +61,15 @@ const getToken = async (code) => {
 
 export const getEvents = async () => {
   if (window.location.href.startsWith("http://localhost")) {
+    NProgress.done();
     return mockData;
+  }
+
+  //Acess local Storage when user is offline
+  if (!navigator.onLine) {
+    const events = localStorage.getItem("lastEvents");
+    NProgress.done();
+    return events ? JSON.parse(events) : [];
   }
 
   const token = await getAccessToken();
@@ -74,6 +83,8 @@ export const getEvents = async () => {
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
+      NProgress.done();
+      localStorage.setItem("lastEvents", JSON.stringify(result.events));
       return result.events;
     } else return null;
   }

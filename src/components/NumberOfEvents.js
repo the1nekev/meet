@@ -2,12 +2,23 @@
 
 import { useState } from "react";
 
-const NumberOfEvents = ({ setCurrentNOE }) => {
+const NumberOfEvents = ({ setCurrentNOE, setErrorAlert }) => {
   // const [number, setNumber] = useState(32);
 
   const handleInputChanged = (event) => {
     const value = event.target.value;
-    setCurrentNOE(value);
+
+    if (isNaN(value)) {
+      setErrorAlert("Value is not a number");
+    } else if (value > 50) {
+      setErrorAlert("Maximum Value is 50");
+    } else if (value <= 0) {
+      setErrorAlert("Minimun value is 1");
+    } else {
+      setErrorAlert("");
+      setCurrentNOE(value);
+    }
+    // setCurrentNOE(value);
   };
 
   return (
